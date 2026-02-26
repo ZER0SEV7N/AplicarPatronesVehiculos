@@ -1,5 +1,70 @@
 //backend/src/repositories/vehiculos.repository.js
-import { Vehiculo } from '../models/vehiculos.model.js';
-import { Marca } from '../models/marcas.models.js';
-import { TipoVehiculo } from '../models/tipoVehiculos.models.js';
+import BaseRepos from "./base.repository";
+import vehiculosModel from "../models/vehiculos.model";
+import TVRepos from "./tipoVehiculos.repository";
+import MarcasRepos from "./marcas.repository";
 
+export default class VehiculosRepos extends BaseRepos {
+    constructor() {
+        super(vehiculosModel);
+        this.tvRepos = TVRepos();
+        this.marcasRepos = MarcasRepos();
+    }
+
+    //Metodo para Crear un nuevo vehiculo
+    async create(data) {
+        //Validar que el tipo de vehiculo exista
+        const TV = await this.tvRepos.getById(data.idtv);
+        if (!TV) throw new Error('El tipo de vehiculo no existe');
+        //Validar que la marca exista
+        const marca = await this.marcasRepos.getById(data.idmarca);
+        if (!marca) throw new Error('La marca no existe');
+
+        //Llamar al procedimiento almacenado para insertar el nuevo vehiculo
+        const query = `CALL SP_Insertar_Vehiculo(?,?,?,?,?,?)`
+
+        //Crear el nuevo vehiculo
+        return this.vehiculosModel.sequelize.query(query, {
+            replacements: [data.idtv, data.modelo, data.color, data.matricula, data.anio_fabricacion, data.idmarca]
+        });
+    }
+
+    //Metodo para actualizar un vehiculo
+    async update(id, data) {
+        //Validar que el vehiculo existe
+        const vehiculo = await this.getById(id, { relations: ['tipoVehiculo', 'marca'] });
+        if (!vehiculo) throw new Error('El vehiculo no existe');
+
+        //Validar que el tipo de marca exista
+        const marca = await this.marcasRepos.getById(data.idmarca);
+        if (!marca) throw new Error('La marca no existe');
+
+        //Llamar al procedimiento almacenado para actualizar el vehiculo
+        const query = `CALL SP_Actualizar_Vehiculo(?,?,?,?,?,?)`
+        return this.vehiculosModel.sequelize.query(query, {
+            replacements: [id, data.modelo, data.color, data.matricula, data.anio_fabricacion, data.idmarca]
+        });
+    }
+
+    //Metodo para filtrar vehiculos por diferentes criterios
+    async filter(criterios) {
+        const query = `CALL SP_Filtrar_Vehiculos(?,?,?,?,?)`
+        return this.vehiculosModel.sequelize.query(query, {
+            replacements: [
+                criterios.modelo ?? null,
+                criterios.color ?? null,
+                criterios.matricula ?? null,
+                criterios.tv ?? null,
+                criterios.idmarca ?? null
+            ]
+        });
+    }
+
+    //Metodo para eliminar un vehiculo
+    async delete(id) {
+        //Validar que el vehiculo existe
+        const vehiculo = await this.getById(id);
+        if (!vehiculo) throw new Error('El vehiculo no existe');
+        return this.vehiculosModel.destroy({ where: { idvehiculo: id } });
+    }
+}

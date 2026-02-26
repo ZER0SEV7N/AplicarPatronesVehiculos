@@ -54,17 +54,15 @@ INSERT tipos_vehiculos VALUES
 
 -- Crear procedimiento almacenado para insertar un nuevo vehiculo
 DELIMITER //
-CREATE PROCEDURE InsertarVehiculo(
-    IN p_idtv VARCHAR(20),
-    IN p_modelo CHAR(50),
-    IN p_color CHAR(20),
+CREATE PROCEDURE SP_Insertar_Vehiculo(
+    IN p_idtv INT,
+    IN p_modelo VARCHAR(50),
+    IN p_color VARCHAR(20),
     IN p_matricula CHAR(7),
     IN p_anio_fabricacion YEAR,
     IN p_idmarca INT
 )
 BEGIN
-
-
     INSERT vehiculos (idtipovehiculo, modelo, color, matricula, anio_fabricacion, idmarca)
     VALUES (
         p_idtv,
@@ -81,7 +79,7 @@ DELIMITER ;
 
 -- Crear procedimiento almacenado para actualizar un vehiculo
 DELIMITER //
-CREATE PROCEDURE ActualizarVehiculo(
+CREATE PROCEDURE SP_Actualizar_Vehiculo(
     IN p_idvehiculo INT,
     IN p_modelo VARCHAR(50),
     IN p_color VARCHAR(20),
@@ -106,7 +104,7 @@ DELIMITER ;
 
 -- Crear procedimiento para filtrar vehiculos por diferentes criterios
 DELIMITER //
-CREATE PROCEDURE FiltrarVehiculos(
+CREATE PROCEDURE SP_Filtrar_Vehiculos(
     IN p_modelo VARCHAR(50),
     IN p_color VARCHAR(20),
     IN p_matricula CHAR(7),

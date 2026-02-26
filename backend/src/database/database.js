@@ -30,9 +30,8 @@ class Database {
   }
 
   //Metodo para obtener la instancia
-  static ObtenerInstancia() {
-    if (!Database.instance) new Database();
-    return Database.instance;
+  ObtenerInstancia() {
+    return this.sequelize;
   }
 
   //Metodo para iniciar la conexión a la base de datos
