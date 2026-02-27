@@ -13,13 +13,6 @@ export default class VehiculosRepos extends BaseRepos {
 
     //Metodo para Crear un nuevo vehiculo
     async create(data) {
-        //Validar que el tipo de vehiculo exista
-        const TV = await this.tvRepos.getById(data.idtv);
-        if (!TV) throw new Error('El tipo de vehiculo no existe');
-        //Validar que la marca exista
-        const marca = await this.marcasRepos.getById(data.idmarca);
-        if (!marca) throw new Error('La marca no existe');
-
         //Llamar al procedimiento almacenado para insertar el nuevo vehiculo
         const query = `CALL SP_Insertar_Vehiculo(?,?,?,?,?,?)`
 
@@ -31,14 +24,6 @@ export default class VehiculosRepos extends BaseRepos {
 
     //Metodo para actualizar un vehiculo
     async update(id, data) {
-        //Validar que el vehiculo existe
-        const vehiculo = await this.getById(id, { relations: ['tipoVehiculo', 'marca'] });
-        if (!vehiculo) throw new Error('El vehiculo no existe');
-
-        //Validar que el tipo de marca exista
-        const marca = await this.marcasRepos.getById(data.idmarca);
-        if (!marca) throw new Error('La marca no existe');
-
         //Llamar al procedimiento almacenado para actualizar el vehiculo
         const query = `CALL SP_Actualizar_Vehiculo(?,?,?,?,?,?)`
         return this.vehiculosModel.sequelize.query(query, {
