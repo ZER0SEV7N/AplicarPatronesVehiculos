@@ -2,6 +2,7 @@
 import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
+import ApiRutas from './routes/routes.js';
 
 //Inicializar el servidor
 const app = express();
@@ -14,6 +15,9 @@ app.use(express.json());
 //Registrar las solicitudes HTTP en la consola
 app.use(morgan('dev'));
 
+const router = ApiRutas();
+app.use('/api', router);
+
 app.listen(port, () => {
-    console.log(`Servidor abiero en el puerto ${port}`);
+    console.log(`Servidor abierto en el puerto ${port}`);
 });

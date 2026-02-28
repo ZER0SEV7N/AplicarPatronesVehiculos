@@ -1,7 +1,7 @@
 //backend/src/controller/vehiculos.controller.js
 export default class VehiculosController {
-    constructor(VehiculosServices) {
-        this.vehiculosServices = VehiculosServices();
+    constructor(vehiculosServices) {
+        this.vehiculosServices = vehiculosServices;
     }
 
     //Crear vehiculo

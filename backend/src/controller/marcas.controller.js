@@ -1,7 +1,7 @@
 //backend/src/controller/marcas.controller.js
 export default class MarcasController {
-    constructor(MarcasRepos) {
-        this.marcasRepos = MarcasRepos();
+    constructor(marcasRepos) {
+        this.marcasRepos = marcasRepos;
     }
 
     //Obtener todas las marcas

@@ -1,14 +1,11 @@
 //backend/src/repositories/vehiculos.repository.js
-import BaseRepos from "./base.repository";
-import vehiculosModel from "../models/vehiculos.model";
-import TVRepos from "./tipoVehiculos.repository";
-import MarcasRepos from "./marcas.repository";
+import BaseRepos from "./base.repository.js";
 
 export default class VehiculosRepos extends BaseRepos {
-    constructor() {
+    constructor(vehiculosModel, TVRepos, MarcasRepos) {
         super(vehiculosModel);
-        this.tvRepos = TVRepos();
-        this.marcasRepos = MarcasRepos();
+        this.tvRepos = TVRepos;
+        this.marcasRepos = MarcasRepos;
     }
 
     //Metodo para Crear un nuevo vehiculo
@@ -17,7 +14,7 @@ export default class VehiculosRepos extends BaseRepos {
         const query = `CALL SP_Insertar_Vehiculo(?,?,?,?,?,?)`
 
         //Crear el nuevo vehiculo
-        return this.vehiculosModel.sequelize.query(query, {
+        return this.model.sequelize.query(query, {
             replacements: [data.idtv, data.modelo, data.color, data.matricula, data.anio_fabricacion, data.idmarca]
         });
     }
@@ -26,7 +23,7 @@ export default class VehiculosRepos extends BaseRepos {
     async update(id, data) {
         //Llamar al procedimiento almacenado para actualizar el vehiculo
         const query = `CALL SP_Actualizar_Vehiculo(?,?,?,?,?,?)`
-        return this.vehiculosModel.sequelize.query(query, {
+        return this.model.sequelize.query(query, {
             replacements: [id, data.modelo, data.color, data.matricula, data.anio_fabricacion, data.idmarca]
         });
     }
@@ -34,7 +31,7 @@ export default class VehiculosRepos extends BaseRepos {
     //Metodo para filtrar vehiculos por diferentes criterios
     async filter(criterios) {
         const query = `CALL SP_Filtrar_Vehiculos(?,?,?,?,?)`
-        return this.vehiculosModel.sequelize.query(query, {
+        return this.model.sequelize.query(query, {
             replacements: [
                 criterios.modelo ?? null,
                 criterios.color ?? null,
@@ -50,6 +47,6 @@ export default class VehiculosRepos extends BaseRepos {
         //Validar que el vehiculo existe
         const vehiculo = await this.getById(id);
         if (!vehiculo) throw new Error('El vehiculo no existe');
-        return this.vehiculosModel.destroy({ where: { idvehiculo: id } });
+        return this.model.destroy({ where: { idvehiculo: id } });
     }
 }

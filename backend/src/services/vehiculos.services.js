@@ -1,6 +1,5 @@
 //backend/src/services/vehiculos.services.js
 //Clase para manejar la logica de negocio de los vehiculos. Previo al controlador
-import VehiculosRepos from "../repositories/vehiculos.repository.js";
 
 export default class VehiculosServices {
     constructor(vehiculosRepos, tipoVehiculosRepos, marcasRepos) {
@@ -32,8 +31,9 @@ export default class VehiculosServices {
     //Crear un nuevo vehiculo
     async crearVehiculo(data) {
         //Validaciones previas
-        await this.validarMarca(data.idmarca);
         await this.validarTipoVehiculo(data.idtv);
+        await this.validarMarca(data.idmarca);
+        
         //Crear el nuevo vehiculo
         return this.vehiculosRepos.create(data);
     }
@@ -57,5 +57,16 @@ export default class VehiculosServices {
     async eliminarVehiculo(id) {
         await this.validarVehiculo(id);
         return this.vehiculosRepos.delete(id);
+    }
+
+    //Obtener un vehiculo por id
+    async obtenerVehiculoPorId(id) {
+        await this.validarVehiculo(id);
+        return this.vehiculosRepos.getById(id);
+    }
+
+    //Obtener todos los vehiculos
+    async obtenerTodosVehiculos() {
+        return this.vehiculosRepos.getAll();
     }
 }

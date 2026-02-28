@@ -1,8 +1,7 @@
 //backend/src/repositories/tipoVehiculos.repository.js
-import BaseRepos from "./base.repository";
-import TVModels from "../models/tipoVehiculos.models";
+import BaseRepos from "./base.repository.js";
 export default class TVRepos extends BaseRepos {
-    constructor() {
+    constructor(TVModels) {
         super(TVModels);
     }
 }

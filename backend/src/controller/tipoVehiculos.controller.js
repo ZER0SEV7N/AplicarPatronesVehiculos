@@ -1,7 +1,7 @@
 //backend/src/controller/tipoVehiculos.controller.js
 export default class TipoVehiculosController {
-    constructor(TipoVehiculosRepos) {
-        this.tipoVehiculosRepos = TipoVehiculosRepos();
+    constructor(tipoVehiculosRepos) {
+        this.tipoVehiculosRepos = tipoVehiculosRepos;
     }
     //Obtener todos los tipos de vehiculos
     async obtenerTipoVehiculos(req, res){

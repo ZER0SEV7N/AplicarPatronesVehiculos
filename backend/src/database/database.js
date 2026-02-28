@@ -9,7 +9,7 @@ class Database {
 
     //Configurar el pool de conexiones
     this.sequelize = new Sequelize(
-      'vehiculos_db', //Nombre de la base de datos
+      'vehiculosDB', //Nombre de la base de datos
       'root', //Usuario
       '', //Contraseña
       {
