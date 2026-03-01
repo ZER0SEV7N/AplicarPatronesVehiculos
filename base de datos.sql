@@ -108,7 +108,7 @@ CREATE PROCEDURE SP_Filtrar_Vehiculos(
     IN p_modelo VARCHAR(50),
     IN p_color VARCHAR(20),
     IN p_matricula CHAR(7),
-    IN p_tv VARCHAR(20),
+    IN p_idtv INT,
     IN p_idmarca INT
 )
 BEGIN
@@ -118,10 +118,10 @@ BEGIN
     FROM vehiculos v
     JOIN marcas m ON v.idmarca = m.idmarca
     JOIN tipos_vehiculos tv ON v.idtipovehiculo = tv.idtipovehiculo
-    WHERE (v.modelo = p_modelo OR p_modelo IS NULL)
-    AND (v.color = p_color OR p_color IS NULL)
-    AND (v.matricula = p_matricula OR p_matricula IS NULL)
-    AND (tv.nombre = p_tv OR p_tv IS NULL)
-    AND (v.idmarca = p_idmarca OR p_idmarca IS NULL);
+    WHERE (p_modelo IS NULL OR v.modelo LIKE CONCAT('%', p_modelo, '%'))
+    AND (p_color IS NULL OR v.color LIKE CONCAT('%', p_color, '%'))
+    AND (p_matricula IS NULL OR v.matricula LIKE CONCAT('%', p_matricula, '%'))
+    AND (p_idtv IS NULL OR v.idtipovehiculo = p_idtv)
+    AND (p_idmarca IS NULL OR v.idmarca = p_idmarca);
 END //
 DELIMITER ;
