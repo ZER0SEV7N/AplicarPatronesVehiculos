@@ -72,14 +72,14 @@ async function cargarTipos() {
     try {
         const res = await fetch(`${apiUrl}/tipos-vehiculos`);
         if (res.ok) {
-        const data = await res.json();
-        const select = document.getElementById("Tv-select");
-        data.forEach((tipo) => {
-            const option = document.createElement("option");
-            option.value = tipo.idtipovehiculo;
-            option.textContent = tipo.nombre;
-            select.appendChild(option);
-        });
+            const data = await res.json();
+            const select = document.getElementById("Tv-select");
+            data.forEach((tipo) => {
+                const option = document.createElement("option");
+                option.value = tipo.idtipovehiculo;
+                option.textContent = tipo.nombre;
+                select.appendChild(option);
+            });
         }
     } catch (e) {
         console.error("Error al cargar los tipos de vehiculos: ", e);
@@ -91,13 +91,13 @@ async function cargarMarcas() {
     try {
         const res = await fetch(`${apiUrl}/marcas`);
         if (res.ok) {
-        const data = await res.json();
+            const data = await res.json();
             const select = document.getElementById("marcas-select");
             data.forEach((marca) => {
-            const option = document.createElement("option");
-            option.value = marca.idmarca;
-            option.textContent = marca.nombre;
-            select.appendChild(option);
+                const option = document.createElement("option");
+                option.value = marca.idmarca;
+                option.textContent = marca.nombre;
+                select.appendChild(option);
             });
         }
     } catch (e) {
