@@ -26,6 +26,9 @@ Cuarto Patron: Dependecy Injection
 
 Patron de arquitectura: MVC
 > Se utiliza para la distribucion de carpetas y logica dentro del backend.
+
 > Model: Define la estructura de los datos y la logica de negocio mediante sequelize.
+
 > View: Presenta los datos al usuario atravez del API REST, obtorgando respuestas en el formato JSON.
+
 > Controller: Actua como intermediario, procesando las peticiones HTTP y coordinando la logica entre el servicio y la respuesta.
