@@ -3,27 +3,46 @@
 
 const apiUrl = "http://localhost:3000/api";
 
+//Funcion para gestionar las operaciones de la api (DRY)
+async function apiRequest(endpoint, options = {}) {
+    try{
+        const response = await fetch(`${apiUrl}${endpoint}`, {
+            headers: { "Content-Type": "application/json" },
+            ...options,
+        })
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || "Error en la solicitud");
+        }
+        return await response.json();
+    } catch (error) {
+        console.error("Error en la solicitud a la API: ", error);
+        throw error;
+    }
+}
+
 //Funcion para formatear el cuerpo de la tabla
 function formatearTabla(data) {
-    const fila = document.getElementById("vehiculo-list");
-    fila.innerHTML = "";
-    data.forEach((vehiculo) => {
-        const row = document.createElement("tr");
-        row.innerHTML = `
-            <td>${vehiculo.idvehiculo}</td>
-            <td>${vehiculo.tipo_vehiculo}</td>
-            <td>${vehiculo.modelo}</td>
-            <td>${vehiculo.color}</td>
-            <td>${vehiculo.matricula}</td>
-            <td>${vehiculo.anio_fabricacion}</td>
-            <td>${vehiculo.marca || ""}</td>
+    const lista = document.getElementById("vehiculo-list");
+    if(!lista) return;
+
+    lista.innerHTML =data.map(v => 
+        `<tr>
+            <td>${v.idvehiculo}</td>
+            <td>${v.tipo_vehiculo || "No especificado"}</td>
+            <td>${v.modelo}</td>
+            <td>${v.color}</td>
+            <td>${v.matricula}</td>
+            <td>${v.anio_fabricacion}</td>
+            <td>${v.marca || "No especificada"}</td>
             <td>
-                <button class="btn btn-sm btn-primary" onclick="editarVehiculo(${vehiculo.idvehiculo})">Editar</button>
-                <button class="btn btn-sm btn-danger" onclick="eliminarVehiculo(${vehiculo.idvehiculo})">Eliminar</button>
-            </td>`;
-    fila.appendChild(row);
-  });
-}
+                <button class="btn btn-sm btn-primary" onclick="editarVehiculo(${v.idvehiculo})">Editar</button>
+                <button class="btn btn-sm btn-danger" onclick="eliminarVehiculo(${v.idvehiculo})">Eliminar</button>
+            </td>
+        </tr>
+    `).join('');
+};
+
 
 //Funcion para mostrar los vehiculos del backend
 async function mostrarVehiculos() {
@@ -226,16 +245,13 @@ function editarVehiculo(idvehiculo) {
 }
 
 //Cargar el documento
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
     //Primero cargar los select y el navbar
-    cargarTipos();
-    cargarMarcas();
-    cargarNavbar();
-    
+    await promise.all([cargarTipos(), cargarMarcas(), cargarNavbar()]);
+
     //Unicamente cargar en el formulario
-    if (document.getElementById("vehiculos-form")) {
-        ManejarFormulario();
-    }
+    if (document.getElementById("vehiculos-form")) ManejarFormulario();
+    
 
     //Unicamente cargar en la tabla de vehiculos
     if (document.getElementById("vehiculo-list")) {

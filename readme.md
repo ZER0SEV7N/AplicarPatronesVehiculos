@@ -21,8 +21,11 @@ Segundo Patron: Repository
 Tercer Patron: Template Method
 > Lo utilizo en mi repository: Primero defino una superClase llamada baseRepository donde se definen los metodos **getAll** y **getById**. Dichos metodos se heredan en los 3 repositorios, con la diferencia de que en el repositorio vehiculos tiene los demas metodos para el CRUD, a diferencia de tipos_vehiculos y marcas que unicamente utilizan los elementos del base. Evitando escribir codigo innecesario.
 
+Cuarto Patron: Dependecy Injection
+> Lo utilizo en todas mis clases [models -> repositories -> services -> controller] en lugar de crear sus propias dependencias, estas son enviadas a travez del constructor. Ejemplo: Al instanciar mi vehiculosController, inyecto la instancia vehiculosServices previamente configurado.  
+
 Patron de arquitectura: MVC
 > Se utiliza para la distribucion de carpetas y logica dentro del backend.
-> Model: Representa los datos y la logica de negocio.
-> View: Presenta los datos al usuario atravez del API.
-> Controller: Maneja las peticiones del usuario, interactua con ambos y selecciona que vista mostrar.
+> Model: Define la estructura de los datos y la logica de negocio mediante sequelize.
+> View: Presenta los datos al usuario atravez del API REST, obtorgando respuestas en el formato JSON.
+> Controller: Actua como intermediario, procesando las peticiones HTTP y coordinando la logica entre el servicio y la respuesta.
