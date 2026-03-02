@@ -247,7 +247,7 @@ function editarVehiculo(idvehiculo) {
 //Cargar el documento
 document.addEventListener("DOMContentLoaded", async () => {
     //Primero cargar los select y el navbar
-    await promise.all([cargarTipos(), cargarMarcas(), cargarNavbar()]);
+    await Promise.all([cargarTipos(), cargarMarcas(), cargarNavbar()]);
 
     //Unicamente cargar en el formulario
     if (document.getElementById("vehiculos-form")) ManejarFormulario();
