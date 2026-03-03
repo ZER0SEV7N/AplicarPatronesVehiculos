@@ -39,3 +39,5 @@ process.on('SIGINT', async () => {
     await dbInstance.cerrar();
     process.exit(0); //Salir del proceso con un código de éxito
 });
+
+export default app; //Exportar el servidor para las pruebas unitarias

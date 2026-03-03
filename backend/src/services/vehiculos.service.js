@@ -27,12 +27,24 @@ export default class VehiculosServices {
         if (!vehiculo) throw new Error('El vehiculo no existe');
     }
 
+    async validarMatricula(matricula) {
+        if (!matricula) throw new Error('La matricula es obligatoria');
+        if (matricula.length > 7) throw new Error('La matricula no puede tener más de 7 caracteres');
+    }
+
+    async validarAnioFabricacion(anio_fabricacion) {
+        if (!anio_fabricacion) throw new Error('El año de fabricación es obligatorio');
+        const anioActual = new Date().getFullYear();
+        if (anio_fabricacion < 1900 || anio_fabricacion > anioActual) throw new Error('El año de fabricación debe ser entre 1900 y el año actual');
+        }
 
     //Crear un nuevo vehiculo
     async crearVehiculo(data) {
         //Validaciones previas
         await this.validarTipoVehiculo(data.idtv);
         await this.validarMarca(data.idmarca);
+        await this.validarMatricula(data.matricula);
+        await this.validarAnioFabricacion(data.anio_fabricacion);
         
         //Crear el nuevo vehiculo
         return this.vehiculosRepos.create(data);
@@ -44,6 +56,9 @@ export default class VehiculosServices {
         await this.validarVehiculo(id);
         //Validaciones previas
         await this.validarMarca(data.idmarca);
+        await this.validarMatricula(data.matricula);
+        await this.validarAnioFabricacion(data.anio_fabricacion);
+
         //Actualizar el vehiculo
         return this.vehiculosRepos.update(id, data);
     }
@@ -57,16 +72,5 @@ export default class VehiculosServices {
     async eliminarVehiculo(id) {
         await this.validarVehiculo(id);
         return this.vehiculosRepos.delete(id);
-    }
-
-    //Obtener un vehiculo por id
-    async obtenerVehiculoPorId(id) {
-        await this.validarVehiculo(id);
-        return this.vehiculosRepos.getById(id);
-    }
-
-    //Obtener todos los vehiculos
-    async obtenerTodosVehiculos() {
-        return this.vehiculosRepos.getAll();
     }
 }
