@@ -85,5 +85,4 @@ describe("Pruebas unitarias para los endpoints GET de vehiculos", () => {
         //Verificar que el cuerpo de la respuesta sea un array vacío
         expect(res.body.length).toEqual(0);
     });
-
 });
