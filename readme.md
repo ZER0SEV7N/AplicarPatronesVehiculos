@@ -12,13 +12,15 @@ npm install
 npm run dev
 ```
 
-## Ejecutar pruebas unitarias
+## Ejecutar una prueba en especifico
 ```bash
-Ejecutar una por una:
-npm test -- ${nombredelaprueba}
-O ejecutar
-
+npm test -- ${nombre.peticion}
 ```
+## Ejecutar todas las pruebas
+```bash
+npm test
+```
+
 
 Primer Patron: Singleton
 > Se utiliza en database.js para unicamente tener una instancia de base de datos iniciada, utilizo la libreria sequelize para aplicar este patron.
