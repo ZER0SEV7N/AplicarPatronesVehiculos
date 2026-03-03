@@ -1,4 +1,4 @@
-//backend/src/test/tipovehiculos.get.test.js
+//backend/src/test/tv.get.test.js
 //Pruebas unitarias a los endpoints relacionados a tipos de vehiculos
 import request from 'supertest';
 import app from '../src/app.js';
