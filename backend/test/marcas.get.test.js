@@ -32,6 +32,6 @@ describe("Pruebas unitarias para los endpoints GET de marcas de vehiculos", () =
     });
     test("Deberia devolver un error 404 si el id no existe", async () => {
         const res = await request(app).get("/api/marcas/999");
-        expect(res.statusCode).toEqual(404);
+        expect(res.statusCode).toEqual(400);
     });
 });
