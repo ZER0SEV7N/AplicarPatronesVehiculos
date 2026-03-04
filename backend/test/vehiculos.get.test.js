@@ -79,7 +79,7 @@ describe("Pruebas unitarias para los endpoints GET de vehiculos", () => {
             });
         })
     })
-    test("Deberia devolver un error 200 si el criterio de búsqueda es inválido, Aunque sin elementos", async () => {
+    test("Deberia devolver 200 si el criterio de búsqueda no coincide con lo que este almacenado, Se espera que no devuelva elementos", async () => {
         const res = await request(app).get("/api/vehiculos?modelo=Ranger&color=Azul&matricula=XYZ-1234&idtipovehiculo=100&idmarca=100");
         expect(res.statusCode).toEqual(200);
         //Verificar que el cuerpo de la respuesta sea un array vacío
