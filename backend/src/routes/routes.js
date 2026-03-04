@@ -4,7 +4,7 @@ import {marcasModel, TVModels, vehiculosModel} from '../models/index.models.js';
 import MarcasRepos from '../repositories/marcas.repository.js';
 import TVRepos from '../repositories/tipoVehiculos.repository.js';
 import VehiculosRepos from '../repositories/vehiculos.repository.js';
-import VehiculosServices from '../services/vehiculos.services.js';
+import VehiculosServices from '../services/vehiculos.service.js';
 import VehiculosController from '../controller/vehiculos.controller.js';
 import MarcasController from '../controller/marcas.controller.js';
 import TipoVehiculosController from '../controller/tipoVehiculos.controller.js';
@@ -19,7 +19,7 @@ export default function ApiRutas() {
 
     const vehiculosServices = new VehiculosServices(vehiculosRepo, tvRepo, marcasRepo);
 
-    const vehiculosController = new VehiculosController(vehiculosServices);
+    const vehiculosController = new VehiculosController(vehiculosServices, vehiculosRepo);
     const marcasController = new MarcasController(marcasRepo);
     const TVController = new TipoVehiculosController(tvRepo);
 
@@ -28,15 +28,15 @@ export default function ApiRutas() {
     router.patch('/vehiculos/:id', (req, res) => vehiculosController.actualizarVehiculo(req, res));
     router.get('/vehiculos/', (req, res) => vehiculosController.filtrarVehiculos(req, res));
     router.delete('/vehiculos/:id', (req, res) => vehiculosController.eliminarVehiculo(req, res));
-    router.get('/vehiculos/:id', (req, res) => vehiculosController.obtenerVehiculoPorId(req, res));
+    router.get('/vehiculos/:id', (req, res) => vehiculosController.getById(req, res));
 
     //Rutas para marcas
-    router.get('/marcas', (req, res) => marcasController.obtenerMarcas(req, res));
-    router.get('/marcas/:id', (req, res) => marcasController.obtenerMarcaPorId(req, res));
+    router.get('/marcas', (req, res) => marcasController.getAll(req, res));
+    router.get('/marcas/:id', (req, res) => marcasController.getById(req, res));
 
     //Rutas para tipos de vehiculos
-    router.get('/tipos-vehiculos', (req, res) => TVController.obtenerTipoVehiculos(req, res));
-    router.get('/tipos-vehiculos/:id', (req, res) => TVController.obtenerTipoVehiculoPorId(req, res));
+    router.get('/tipos-vehiculos', (req, res) => TVController.getAll(req, res));
+    router.get('/tipos-vehiculos/:id', (req, res) => TVController.getById(req, res));
 
     return router;
 }
