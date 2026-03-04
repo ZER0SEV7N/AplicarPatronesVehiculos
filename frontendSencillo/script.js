@@ -3,24 +3,6 @@
 
 const apiUrl = "http://localhost:3000/api";
 
-//Funcion para gestionar las operaciones de la api (DRY)
-async function apiRequest(endpoint, options = {}) {
-    try{
-        const response = await fetch(`${apiUrl}${endpoint}`, {
-            headers: { "Content-Type": "application/json" },
-            ...options,
-        })
-        if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.message || "Error en la solicitud");
-        }
-        return await response.json();
-    } catch (error) {
-        console.error("Error en la solicitud a la API: ", error);
-        throw error;
-    }
-}
-
 //Funcion para formatear el cuerpo de la tabla
 function formatearTabla(data) {
     const lista = document.getElementById("vehiculo-list");
@@ -247,7 +229,7 @@ function editarVehiculo(idvehiculo) {
 //Cargar el documento
 document.addEventListener("DOMContentLoaded", async () => {
     //Primero cargar los select y el navbar
-    await promise.all([cargarTipos(), cargarMarcas(), cargarNavbar()]);
+    await Promise.all([cargarTipos(), cargarMarcas(), cargarNavbar()]);
 
     //Unicamente cargar en el formulario
     if (document.getElementById("vehiculos-form")) ManejarFormulario();
