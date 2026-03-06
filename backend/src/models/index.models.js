@@ -21,11 +21,18 @@ const marcasModel = sequelize.define(
       type: DataTypes.STRING(50),
       allowNull: false,
     },
+    //CreatedAt TIMESTAMP
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: DataTypes.NOW,
+    },
   },
   {
     //Configuracion del modelo
     tableName: "marcas",
-    timestamps: false,
+    timestamps: true,
+    updatedAt: false, 
   },
 );
 
@@ -45,11 +52,18 @@ const TVModels = sequelize.define(
       type: DataTypes.STRING(20),
       allowNull: false,
     },
+    //CreatedAt TIMESTAMP
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: DataTypes.NOW,
+    },
   },
   {
     //Configuracion del modelo
     tableName: "tipos_vehiculos",
     timestamps: false,
+    updatedAt: false,
   },
 );
 
@@ -105,11 +119,29 @@ const vehiculosModel = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+    //Estado ENUM('disponible', 'vendido', 'En Reparacion', 'No Disponible', 'Inactivo')
+    estado: {
+      type: DataTypes.ENUM('Disponible', 'En Reparacion', 'Vendido', 'No Disponible', 'Inactivo'),
+      allowNull: false,
+      defaultValue: 'Disponible',
+    },
+    //CreatedAt TIMESTAMP
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: DataTypes.NOW,
+    },
+    //UpdatedAt TIMESTAMP
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: DataTypes.NOW,
+    },
   },
   {
     //Configuracion del modelo
     tableName: "vehiculos",
-    timestamps: false,
+    timestamps: true,
   },
 );
 

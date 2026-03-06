@@ -11,7 +11,7 @@ export default class BaseController {
     async getById(req, res){
         try{
             const objeto = await this.controller.getById(req.params.id)
-            if(!objeto) return res.status(404).json({error: error.message})
+            if(!objeto) return res.status(404).json({error: "No se encontró el elemento"})
             res.status(200).json(objeto)
         }catch (error) {
             res.status(400).json({ error: error.message})
@@ -27,5 +27,4 @@ export default class BaseController {
             res.status(400).json({ error: error.message})
         }
     }
-
 }

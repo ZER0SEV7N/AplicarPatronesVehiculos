@@ -36,7 +36,13 @@ export default class VehiculosServices {
         if (!anio_fabricacion) throw new Error('El año de fabricación es obligatorio');
         const anioActual = new Date().getFullYear();
         if (anio_fabricacion < 1900 || anio_fabricacion > anioActual) throw new Error('El año de fabricación debe ser entre 1900 y el año actual');
-        }
+    }
+
+    async validarEstado(estado) {
+        const estadosValidos = ['Disponible', 'En Reparacion', 'Inactivo', 'Vendido', 'No Disponible'];
+        if (!estado) throw new Error('El estado es obligatorio');
+        if (!estadosValidos.includes(estado)) throw new Error(`El estado debe ser uno de los siguientes: ${estadosValidos.join(', ')}`);
+    }
 
     //Crear un nuevo vehiculo
     async crearVehiculo(data) {
@@ -45,7 +51,7 @@ export default class VehiculosServices {
         await this.validarMarca(data.idmarca);
         await this.validarMatricula(data.matricula);
         await this.validarAnioFabricacion(data.anio_fabricacion);
-        
+        await this.validarEstado(data.estado);
         //Crear el nuevo vehiculo
         return this.vehiculosRepos.create(data);
     }
@@ -58,6 +64,7 @@ export default class VehiculosServices {
         await this.validarMarca(data.idmarca);
         await this.validarMatricula(data.matricula);
         await this.validarAnioFabricacion(data.anio_fabricacion);
+        await this.validarEstado(data.estado);
 
         //Actualizar el vehiculo
         return this.vehiculosRepos.update(id, data);
@@ -72,5 +79,28 @@ export default class VehiculosServices {
     async eliminarVehiculo(id) {
         await this.validarVehiculo(id);
         return this.vehiculosRepos.delete(id);
+    }
+
+    //Cambiar el estado de un vehiculo
+    async cambiarEstado(id, nuevoEstado) {
+        //Validar que el vehiculo existe
+        await this.validarVehiculo(id);
+        await this.validarEstado(nuevoEstado);
+        return this.vehiculosRepos.cambiarEstado(id, nuevoEstado);
+    }
+
+    //Metodo para obtener el resumen de vehiculos para el dashboard
+    async getResumenCompleto() {
+        return this.vehiculosRepos.resumenVehiculos();
+    }
+
+    //Metodo para obtener el ultimo vehiculo creado
+    async getUltimoCreado() {
+        return this.vehiculosRepos.ultimoCreado();
+    }
+
+    //Metodo para obtener el ultimo vehiculo actualizado    
+    async getUltimoActualizado() {
+        return this.vehiculosRepos.ultimoActualizado();
     }
 }

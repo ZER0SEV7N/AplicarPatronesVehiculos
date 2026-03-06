@@ -11,20 +11,20 @@ export default class VehiculosRepos extends BaseRepos {
     //Metodo para Crear un nuevo vehiculo
     async create(data) {
         //Llamar al procedimiento almacenado para insertar el nuevo vehiculo
-        const query = `CALL SP_Insertar_Vehiculo(?,?,?,?,?,?)`
+        const query = `CALL SP_Insertar_Vehiculo(?,?,?,?,?,?,?)`
 
         //Crear el nuevo vehiculo
         return this.model.sequelize.query(query, {
-            replacements: [data.idtv, data.modelo, data.color, data.matricula, data.anio_fabricacion, data.idmarca]
+            replacements: [data.idtv, data.modelo, data.color, data.matricula, data.anio_fabricacion, data.idmarca, data.estado ]
         });
     }
 
     //Metodo para actualizar un vehiculo
     async update(id, data) {
         //Llamar al procedimiento almacenado para actualizar el vehiculo
-        const query = `CALL SP_Actualizar_Vehiculo(?,?,?,?,?,?)`
+        const query = `CALL SP_Actualizar_Vehiculo(?,?,?,?,?,?,?)`
         return this.model.sequelize.query(query, {
-            replacements: [id, data.modelo, data.color, data.matricula, data.anio_fabricacion, data.idmarca]
+            replacements: [id, data.modelo, data.color, data.matricula, data.anio_fabricacion, data.idmarca, data.estado]
         });
     }
 
@@ -44,9 +44,37 @@ export default class VehiculosRepos extends BaseRepos {
 
     //Metodo para eliminar un vehiculo
     async delete(id) {
-        //Validar que el vehiculo existe
-        const vehiculo = await this.getById(id);
-        if (!vehiculo) throw new Error('El vehiculo no existe');
         return this.model.destroy({ where: { idvehiculo: id } });
+    }
+
+    //Metodo para obtener el resumen de vehiculos
+    async resumenVehiculos() {
+        const [results] = await this.model.sequelize.query(`CALL SP_Resumen_Vehiculos()`);
+        return results;
+    }
+
+    //Metodo para cambiar el estado de un vehiculo
+    async cambiarEstado(id, nuevoEstado) {
+        return this.model.sequelize.query(`CALL SP_Cambiar_Estado_Vehiculo(?, ?)`, {
+            replacements: [id, nuevoEstado]
+        });
+    }
+
+    //Metodo para obtener el ultimo vehiculo creado
+    async ultimoCreado() {
+        const [results] = await this.model.sequelize.query(`CALL SP_Ultimo_Creado()`);
+        return results[0]; 
+    }
+
+    //Metodo para obtener el ultimo vehiculo actualizado 
+    async ultimoActualizado() {
+        const [results] = await this.model.sequelize.query(`CALL SP_Ultimo_Actualizado()`);
+        return results[0]; 
+    }
+
+    //Metodo para obtener las estidisticas del dashboard
+    async estadisticasDashboard() {
+        const [resumen] = await this.model.sequelize.query(`CALL SP_Resumen_Dashboard()`);
+        return resumen[0]; 
     }
 }
