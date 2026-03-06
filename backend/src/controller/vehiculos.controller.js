@@ -33,7 +33,7 @@ export default class VehiculosController extends BaseController{
     filtrarVehiculos = async (req, res) => {
         try {
             const vehiculos = await this.vehiculosService.filtrarVehiculos(req.query);
-            res.status(200).json(vehiculos[0] || []); 
+            res.status(200).json(vehiculos); 
         }
         catch (error) {
             res.status(400).json({ error: error.message });
@@ -55,8 +55,8 @@ export default class VehiculosController extends BaseController{
     cambiarEstado = async (req, res) => {
         try{
             const { id }  = req.params;
-            const { nuevoEstado } = req.body;
-            const vehiculo = await this.vehiculosService.cambiarEstado(id, nuevoEstado);
+            const { estado } = req.body;
+            const vehiculo = await this.vehiculosService.cambiarEstado(id, estado);
             res.status(200).json({
                 message: 'Estado del vehiculo actualizado correctamente',
                 data: vehiculo

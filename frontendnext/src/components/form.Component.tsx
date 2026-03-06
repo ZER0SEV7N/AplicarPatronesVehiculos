@@ -33,7 +33,7 @@ const FormComponent = ({ vehiculo }: FormComponentProps) => {
     const cargarSelects = async () => {
       const [marcasRes, tiposRes] = await Promise.all([
         api.get("/marcas"),
-        api.get("/tipos-vehiculo")
+        api.get("/tipos-vehiculos")
       ]);
       setMarcas(marcasRes.data);
       setTiposVehiculo(tiposRes.data);
@@ -66,7 +66,7 @@ const FormComponent = ({ vehiculo }: FormComponentProps) => {
   };
 
   //Manejar el envio del formulario
-  const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     //Construir un payload con los datos
@@ -79,17 +79,16 @@ const FormComponent = ({ vehiculo }: FormComponentProps) => {
     try{
       if(vehiculo?.idvehiculo){
         //Modo edicion
-        await api.patch(`/vehiculos/${vehiculo.idvehiculo}`, payload).then(() => {
-          alert("Vehiculo actualizado exitosamente");
-        });
+        await api.patch(`/vehiculos/${vehiculo.idvehiculo}`, payload);
+        alert("Vehiculo actualizado exitosamente");
+        
       } else {
         //Modo creacion
-        await api.post("/vehiculos", payload).then(() => {
-          alert("Vehiculo creado exitosamente");
-        });
-        router.push("/"); //Redireccionar al listado
-        router.refresh(); //Refrescar la pagina para mostrar el nuevo vehiculo
+        await api.post("/vehiculos", payload);
+        alert("Vehiculo creado exitosamente");
       }
+      router.push("/vehiculos"); //Redireccionar al listado
+      router.refresh(); //Refrescar la pagina para mostrar el nuevo vehiculo
     } catch (error) {
       console.error("Error al guardar el vehiculo:", error);
       alert("Ocurrió un error al guardar el vehiculo. Por favor, intenta nuevamente.");
@@ -103,7 +102,7 @@ const FormComponent = ({ vehiculo }: FormComponentProps) => {
       isEditMode={!!vehiculo}
       onSubmit={handleSubmit}
       onChange={handleChange}
-      onCancel={() => router.push("/")}
+      onCancel={() => router.push("/vehiculos")}
     />
   )
 };

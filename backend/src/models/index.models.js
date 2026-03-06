@@ -21,17 +21,12 @@ const marcasModel = sequelize.define(
       type: DataTypes.STRING(50),
       allowNull: false,
     },
-    //CreatedAt TIMESTAMP
-    created_at: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: DataTypes.NOW,
-    },
   },
   {
     //Configuracion del modelo
     tableName: "marcas",
     timestamps: true,
+    createdAt: "created_at",
     updatedAt: false, 
   },
 );
@@ -52,17 +47,12 @@ const TVModels = sequelize.define(
       type: DataTypes.STRING(20),
       allowNull: false,
     },
-    //CreatedAt TIMESTAMP
-    created_at: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: DataTypes.NOW,
-    },
   },
   {
     //Configuracion del modelo
     tableName: "tipos_vehiculos",
-    timestamps: false,
+    timestamps: true,
+    createdAt: "created_at",
     updatedAt: false,
   },
 );
@@ -125,23 +115,13 @@ const vehiculosModel = sequelize.define(
       allowNull: false,
       defaultValue: 'Disponible',
     },
-    //CreatedAt TIMESTAMP
-    created_at: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: DataTypes.NOW,
-    },
-    //UpdatedAt TIMESTAMP
-    updated_at: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: DataTypes.NOW,
-    },
   },
   {
     //Configuracion del modelo
     tableName: "vehiculos",
     timestamps: true,
+    createdAt: "created_at", 
+    updatedAt: "updated_at", 
   },
 );
 

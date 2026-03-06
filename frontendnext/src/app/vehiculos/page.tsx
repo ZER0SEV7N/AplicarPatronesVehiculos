@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { Vehiculo, Marca, TipoVehiculo } from "@/src/types";
 import TableModule from "@/src/util/table.Module";
 import FilterModule from "@/src/util/filter.module";
+import ModalStatus from "@/src/util/status.module";
 
 export default function VehiculosPage() {
     const router = useRouter();
@@ -24,6 +25,8 @@ export default function VehiculosPage() {
         color: "",
         matricula: ""};
     const [filtros, setFiltros] = useState(filtrosIniciales);
+    const [vehiculoSeleccionado, setVehiculoSeleccionado] = useState<Vehiculo | null>(null);
+    const [showModal, setShowModal] = useState(false);
 
     //Cargar datos a los selects y tabla al montar el componente
     useEffect(() => {
@@ -31,7 +34,7 @@ export default function VehiculosPage() {
             try{
                 const [ marcasRes, tiposRes] = await Promise.all([
                     api.get("/marcas"),
-                    api.get("/tipos-vehiculo")
+                    api.get("/tipos-vehiculos")
                 ]);
                 setMarcas(marcasRes.data);
                 setTiposVehiculo(tiposRes.data);
@@ -42,22 +45,24 @@ export default function VehiculosPage() {
         cargarDatos();
     }, []);
 
-   //Cargar la tabla de vehiculos cada vez que cambien los filtros
-   useEffect(() => {
-        const cargarVehiculos = async () => {
-            try{
-                const res = await api.get("/vehiculos", { params: filtros });
-                setVehiculos(res.data);
-            }catch (error) {
-                console.error("Error al cargar los vehiculos:", error);
-            }
-        };
+    //Funcion para cargar los vehiculos segun los filtros
+    const cargarVehiculos = async () => {
+        try{
+            const res = await api.get("/vehiculos", { params: filtros });
+            console.log("Vehiculos cargados:", res.data);
+            setVehiculos(res.data);
+        }catch (error) {
+            console.error("Error al cargar los vehiculos:", error);
+        }
+    };
 
+   //Recargar los vehiculos cada vez que se actualicen los filtros
+   useEffect(() => {
         //Definir un timeout
         const timeoutId = setTimeout(() => {
             cargarVehiculos();
             }, 500); //Esperar 500ms después del último cambio en los filtros
-            return () => clearTimeout(timeoutId); //Limpiar el timeout si los filtros cambian antes de los 500ms
+            return () => clearTimeout(timeoutId); 
     }, [filtros]);
 
     //Funcion para manejar los cambios en los filtros
@@ -84,11 +89,25 @@ export default function VehiculosPage() {
         }
     };
 
-    //Funcion para cambiar el estado de un vehiculo
-    const handleStatusChange = async (id: number, nuevoEstado: string) => {}
+    //Funcion para abrir el modal de cambio de estado
+    const handleStatusChange = (vehiculo: Vehiculo) => {
+        setVehiculoSeleccionado(vehiculo);
+        setShowModal(true);
+    };
+
+    //Funcion para confirmar el cambio de estado en el modal
+    const confirmarCambioEstado = async (id: number, nuevoEstado: string) => {
+        try {
+            await api.patch(`/vehiculos/${id}/estado`, { estado: nuevoEstado });
+            setShowModal(false);
+            cargarVehiculos(); 
+        } catch (error) {
+            console.error("Error al actualizar estado:", error);
+        }
+    };
 
     return (
-        <div className="container" style={{ marginTop: "120px"}}>
+        <div className="container" style={{ marginTop: "60px"}}>
             <div className="row">
             {/* Filtros */}
                 <div className="col-lg-3 col-md-4 mb-4">
@@ -112,6 +131,15 @@ export default function VehiculosPage() {
                     />
                 </div>
             </div>
+            {/* Modal de cambio de estado */}
+            {showModal && vehiculoSeleccionado && (
+                <ModalStatus
+                    vehiculo={vehiculoSeleccionado}
+                    onStatusChange={confirmarCambioEstado}
+                    onClose={() => setShowModal(false)}
+                    onConfirm={() => setShowModal(false)}
+                />
+            )}
         </div>
     )
 }

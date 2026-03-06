@@ -33,11 +33,11 @@ export default class VehiculosRepos extends BaseRepos {
         const query = `CALL SP_Filtrar_Vehiculos(?,?,?,?,?)`
         return this.model.sequelize.query(query, {
             replacements: [
-                criterios.modelo ?? null,
-                criterios.color ?? null,
-                criterios.matricula ?? null,
-                criterios.tv ?? null,
-                criterios.idmarca ?? null
+                criterios.modelo || null,
+                criterios.color || null,
+                criterios.matricula || null,
+                criterios.idtv || null,
+                criterios.idmarca || null
             ]
         });
     }
@@ -55,7 +55,7 @@ export default class VehiculosRepos extends BaseRepos {
 
     //Metodo para cambiar el estado de un vehiculo
     async cambiarEstado(id, nuevoEstado) {
-        return this.model.sequelize.query(`CALL SP_Cambiar_Estado_Vehiculo(?, ?)`, {
+        return this.model.sequelize.query(`CALL SP_Cambiar_Estado(?, ?)`, {
             replacements: [id, nuevoEstado]
         });
     }

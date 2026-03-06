@@ -38,9 +38,9 @@ export default function ApiRutas() {
     //Rutas para vehiculos
     router.post('/vehiculos', (req, res) => vehiculosController.crearVehiculo(req, res));
     router.get('/vehiculos/', (req, res) => vehiculosController.filtrarVehiculos(req, res));
+    router.get('/vehiculos/:id', (req, res) => vehiculosController.getById(req, res));
     router.patch('/vehiculos/:id', (req, res) => vehiculosController.actualizarVehiculo(req, res));
     router.delete('/vehiculos/:id', (req, res) => vehiculosController.eliminarVehiculo(req, res));
-    router.get('/vehiculos/:id', (req, res) => vehiculosController.getById(req, res));
     router.patch('/vehiculos/:id/estado', (req, res) => vehiculosController.cambiarEstado(req, res));
 
     //Rutas para marcas

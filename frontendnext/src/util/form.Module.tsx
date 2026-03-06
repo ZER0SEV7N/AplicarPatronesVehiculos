@@ -119,18 +119,20 @@ const FormPage = ({ formData, marcas, tiposVehiculo, isEditMode, onSubmit, onCha
                     </div>
 
                     <div className="mb-3">
-                        <label htmlFor="Estado" className="form-label">Estado</label>
+                        <label htmlFor="estado" className="form-label">Estado</label>
                         <select
-                            id="Estado"
-                            name="Estado"
+                            id="estado"
+                            name="estado"
                             className="form-control"
-                            value={formData.Estado}
+                            value={formData.estado}
                             onChange={onChange}
                             required
                         >
                             <option value="">Seleccionar estado</option>
                             <option value="Disponible">Disponible</option>
-                            <option value="en Reparacion">En Reparacion</option>
+                            <option value="En Reparacion">En Reparacion</option>
+                            <option value="Vendido">Vendido</option>
+                            <option value="No Disponible">No Disponible</option>
                             <option value="Inactivo">Inactivo</option>
                         </select>
                     </div>

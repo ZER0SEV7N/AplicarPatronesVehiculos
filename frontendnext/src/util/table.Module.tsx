@@ -8,7 +8,7 @@ interface tableModuleProps {
     data: Vehiculo[];
     onEdit: (id: number) => void;
     onDelete: (id: number) => void;
-    onChangeStatus: (id: number, newStatus: 'Disponible' | 'en Reparacion' | 'Inactivo') => void;
+    onChangeStatus: (vehiculo: Vehiculo) => void;
 }
 
 const TableModule = ({ data, onEdit, onDelete, onChangeStatus }: tableModuleProps) => {
@@ -31,10 +31,13 @@ const TableModule = ({ data, onEdit, onDelete, onChangeStatus }: tableModuleProp
                 <tbody>
                     {data.length === 0 ? (
                         <tr>
-                            <td className='text-centes'> No Se encontraron vehiculos</td>
+                            <td colSpan={8} className="text-center py-4">
+                                No se encontraron vehículos o hubo un error al cargar.
+                            </td>
                         </tr>
                     ) : (
                         data.map((item) => (
+                            
                             <tr key={item.idvehiculo}>
                                 <td>{item.idvehiculo}</td>
                                 <td>{item.tipo_vehiculo ||  "No establecido"}</td>
@@ -42,8 +45,8 @@ const TableModule = ({ data, onEdit, onDelete, onChangeStatus }: tableModuleProp
                                 <td>{item.color}</td>
                                 <td>{item.matricula}</td>
                                 <td>{item.anio_fabricacion}</td>
-                                <td>{item.estado}</td>
                                 <td>{item.marca || "No establecida"}</td>
+                                <td>{item.estado}</td>
                                 <td>
                                     <button 
                                      className="btn btn-primary btn-sm me-2" 
@@ -53,8 +56,8 @@ const TableModule = ({ data, onEdit, onDelete, onChangeStatus }: tableModuleProp
                                     <button className="btn btn-danger btn-sm" onClick={() => onDelete(item.idvehiculo!)}>
                                         <i className="bi bi-trash"></i>Eliminar
                                     </button>
-                                    <button className='btn btn-warning btn-sm' onClick={() => onChangeStatus(item.idvehiculo!, item.estado === 'Disponible' ? 'en Reparacion' : item.estado === 'en Reparacion' ? 'Inactivo' : 'Disponible')}>
-                                        <i className="bi bi-exclamation-triangle"></i> Cambiar Estado
+                                    <button className='btn btn-warning btn-sm' onClick={() => onChangeStatus(item)}>
+                                        <i className="bi bi-arrow-repeat"></i> Cambiar Estado
                                     </button>
                                 </td>
                             </tr>

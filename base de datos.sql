@@ -87,9 +87,9 @@ BEGIN
 END //
 DELIMITER ;
 
-CALL SP_Insertar_Vehiculo(1, 'Corolla', 'Blanco', 'ABC-1234', 2020, 1, 'Disponible');
-CALL SP_Insertar_Vehiculo(2, 'CBR600RR', 'Rojo', 'XYZ-5678', 2019, 2, 'Disponible');
-CALL SP_Insertar_Vehiculo(3, 'F-150', 'Azul', 'DEF-9012', 2021, 3, 'Disponible');
+CALL SP_Insertar_Vehiculo(1, 'Corolla', 'Blanco', 'ABC-123', 2020, 1, 'Disponible');
+CALL SP_Insertar_Vehiculo(2, 'CBR600RR', 'Rojo', 'XYZ-567', 2019, 2, 'Disponible');
+CALL SP_Insertar_Vehiculo(3, 'F-150', 'Azul', 'DEF-901', 2021, 3, 'Disponible');
 
 -- Crear procedimiento almacenado para actualizar un vehiculo
 DELIMITER //
@@ -128,7 +128,14 @@ CREATE PROCEDURE SP_Filtrar_Vehiculos(
     IN p_idmarca INT
 )
 BEGIN
-    SELECT idvehiculo, idtipovehiculo, modelo, color, matricula, anio_fabricacion, v.idmarca, v.estado,
+    SELECT v.idvehiculo, 
+        v.idtipovehiculo, 
+        v.modelo, 
+        v.color, 
+        v.matricula, 
+        v.anio_fabricacion, 
+        v.idmarca, 
+        v.estado,
         (SELECT nombre FROM marcas WHERE idmarca = v.idmarca) AS marca,
         (SELECT nombre FROM tipos_vehiculos WHERE idtipovehiculo = v.idtipovehiculo) AS tipo_vehiculo
     FROM vehiculos v
