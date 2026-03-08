@@ -62,19 +62,19 @@ export default class VehiculosRepos extends BaseRepos {
 
     //Metodo para obtener el ultimo vehiculo creado
     async ultimoCreado() {
-        const [results] = await this.model.sequelize.query(`CALL SP_Ultimo_Creado()`);
+        const results = await this.model.sequelize.query(`CALL SP_Ultimo_Creado()`);
         return results[0]; 
     }
 
     //Metodo para obtener el ultimo vehiculo actualizado 
     async ultimoActualizado() {
-        const [results] = await this.model.sequelize.query(`CALL SP_Ultimo_Actualizado()`);
+        const results = await this.model.sequelize.query(`CALL SP_Ultimo_Actualizado()`);
         return results[0]; 
     }
 
     //Metodo para obtener las estidisticas del dashboard
     async estadisticasDashboard() {
-        const [resumen] = await this.model.sequelize.query(`CALL SP_Resumen_Dashboard()`);
-        return resumen[0]; 
+        const results = await this.model.sequelize.query(`CALL SP_Resumen_Dashboard()`);
+        return results[0]; 
     }
 }

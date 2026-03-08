@@ -6,7 +6,7 @@ export default class TVRepos extends BaseRepos {
     }
     //Metodo que llama al procedimiento almacenado para el resumen de tipos de vehiculos
     async resumenTiposVehiculos() {
-        const [results] = await this.model.sequelize.query("CALL SP_Resumen_Tipos_Vehiculos()");
+        const results = await this.model.sequelize.query("CALL SP_Resumen_Tipos()");
         return results;
     }
 }

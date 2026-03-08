@@ -8,9 +8,9 @@ import React, {useState, useEffect} from "react";
 import api from "@/src/lib/config";
 import { useRouter } from "next/navigation";
 import { Vehiculo, Marca, TipoVehiculo } from "@/src/types";
-import TableModule from "@/src/util/table.Module";
-import FilterModule from "@/src/util/filter.module";
-import ModalStatus from "@/src/util/status.module";
+import TableComponent from "@/src/components/table.Component";
+import FilterComponent from "@/src/components/filter.Component";
+import ModalStatus from "@/src/components/status.Component";
 
 export default function VehiculosPage() {
     const router = useRouter();
@@ -111,7 +111,7 @@ export default function VehiculosPage() {
             <div className="row">
             {/* Filtros */}
                 <div className="col-lg-3 col-md-4 mb-4">
-                    <FilterModule
+                    <FilterComponent
                         filtros={filtros}
                         marcas={marcas}
                         tiposVehiculo={tiposVehiculo}
@@ -123,7 +123,7 @@ export default function VehiculosPage() {
                 
                 {/* Tabla de vehiculos */}
                 <div className="col-lg-9 col-md-8">
-                    <TableModule
+                    <TableComponent
                         data={vehiculos}
                         onEdit={(id) => router.push(`/vehiculos/form?id=${id}`)}
                         onDelete={handleDelete}

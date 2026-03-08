@@ -8,7 +8,7 @@ export default class DashboardController {
     //Obtener el resumen completo para el dashboard
     async getDashboardResumen(req, res){
         try{
-            const data = await this.dashboardService.getDashboardResumen();
+            const data = await this.dashboardService.getResumenCompleto();
             res.status(200).json(data);
         }catch (error) {
             res.status(500).json({ error: error.message });

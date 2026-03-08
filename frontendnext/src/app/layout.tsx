@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-
+import Navbar from "@/src/util/navbar.Util";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 export const metadata: Metadata = {
@@ -17,7 +17,10 @@ export default function RootLayout({
   return (
     <html lang="es" data-scroll-behavior="smooth">
       <body>
-        {children}
+        <div className="container mt-5 pt-4">
+          <Navbar />
+          {children}
+        </div>
       </body>
     </html>
   );

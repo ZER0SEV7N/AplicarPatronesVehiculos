@@ -1,17 +1,17 @@
-//frontendVite/src/util/tableModule.jsx
-//Componente para la tabla de datos
+//frontendVite/src/Component/table.Component.jsx
+//Componente con la tabla de listado de vehiculos, elementos ya definidos.
 import React from 'react'
 import { Vehiculo } from '../types';
 
 //Definir los props
-interface tableModuleProps {
+interface tableComponentProps {
     data: Vehiculo[];
     onEdit: (id: number) => void;
     onDelete: (id: number) => void;
     onChangeStatus: (vehiculo: Vehiculo) => void;
 }
 
-const TableModule = ({ data, onEdit, onDelete, onChangeStatus }: tableModuleProps) => {
+const TableComponent = ({ data, onEdit, onDelete, onChangeStatus }: tableComponentProps) => {
     return ( 
         <div className='table-responsive'>
             <table className="table table-striped table-hover">
@@ -69,4 +69,4 @@ const TableModule = ({ data, onEdit, onDelete, onChangeStatus }: tableModuleProp
     )
 }
 
-export default TableModule;
+export default TableComponent;

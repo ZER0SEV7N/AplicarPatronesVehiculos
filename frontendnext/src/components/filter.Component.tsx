@@ -1,9 +1,9 @@
-//frontendnext/src/util/filter.module.tsx
-//Modulo para el filtro de busqueda en el listado de vehiculos
+//frontendnext/src/components/filter.Component.tsx
+//Componente para el filtro de busqueda en el listado de vehiculos
 import React from 'react';
 import { Marca, TipoVehiculo } from '../types';
 
-interface FilterModuleProps {
+interface FilterComponentProps {
     filtros: {
         idtv: string;
         idmarca: string;
@@ -18,7 +18,7 @@ interface FilterModuleProps {
     onAddNew: () => void;
 }
 
-const FilterModule = ({ filtros, marcas, tiposVehiculo, onChange, onReset, onAddNew }: FilterModuleProps) => {
+const FilterComponent = ({ filtros, marcas, tiposVehiculo, onChange, onReset, onAddNew }: FilterComponentProps) => {
     return (
         <div className="card shadow-sm mb-4">
             <div className='card-header bg-dark text-white'>
@@ -129,4 +129,4 @@ const FilterModule = ({ filtros, marcas, tiposVehiculo, onChange, onReset, onAdd
     );
 };
 
-export default FilterModule;
+export default FilterComponent;

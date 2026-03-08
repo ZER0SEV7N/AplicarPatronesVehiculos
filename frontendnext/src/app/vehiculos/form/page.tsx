@@ -1,7 +1,7 @@
 //frontendnext/src/app/vehiculos/page.tsx
 //Archivo para el formulario de creacion/edicion de vehiculos
 "use client";
-import FormComponent from "@/src/components/form.Component";
+import FormComponent from "@/src/hooks/form.Hooks";
 import api from "@/src/lib/config";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";

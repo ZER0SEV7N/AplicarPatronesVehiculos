@@ -9,31 +9,36 @@ export default class DashboardService {
 
     //Metodo para obtener el resumen de vehiculos
     async getResumenCompleto(){
-        //Ejecuta todas las consultas necesarias para obtener el resumen completo
-        const [
-            statsEstados,
-            ultimoCreado,
-            ultimoActualizado,
-            graficoTipos,
-            graficoMarcas
-        ] = await Promise.all([
-            this.vehiculosRepos.resumenVehiculos(),
-            this.vehiculosRepos.ultimoCreado(),
-            this.vehiculosRepos.ultimoActualizado(),
-            this.TVRepos.resumenTiposVehiculos(),
-            this.marcasRepos.resumenMarcas()
-        ])
-        //Retornar un Json con toda la informacion del dashboard
-        return {
-            tarjetaTotales: statsEstados, //Resumen de estados de vehiculos
-            actividadReciente: {
-                ultimoCreado: ultimoCreado, //Ultimo vehiculo creado
-                ultimoActualizado: ultimoActualizado //Ultimo vehiculo actualizado
-            },
-            datosGraficos: {
-                graficoTipos: graficoTipos, //Datos para el grafico de tipos de vehiculos
-                graficoMarcas: graficoMarcas //Datos para el grafico de marcas
+        try{
+            //Ejecuta todas las consultas necesarias para obtener el resumen completo
+            const [
+                resumenDashboard, 
+                ultimoCreado,
+                ultimoActualizado,
+                graficoTipos,
+                graficoMarcas
+            ] = await Promise.all([
+                this.vehiculosRepos.estadisticasDashboard(),
+                this.vehiculosRepos.ultimoCreado(),
+                this.vehiculosRepos.ultimoActualizado(),
+                this.TVRepos.resumenTiposVehiculos(),
+                this.marcasRepos.resumenMarcas()
+                //this.vehiculosRepos.countAll() //Metodo para contar el total de vehiculos
+            ])
+            //Retornar un Json con toda la informacion del dashboard
+            return {
+               estadisticas: {
+                    totales: resumenDashboard, 
+                    ultimoInsertado: ultimoCreado,
+                    ultimoActualizado: ultimoActualizado
+                },
+                datosGraficos: {
+                    graficoTipos: graficoTipos,
+                    graficoMarcas: graficoMarcas
+                }
             }
+        } catch (error) {
+            throw new Error("Error al obtener el resumen del dashboard");
         }
     }
 }
