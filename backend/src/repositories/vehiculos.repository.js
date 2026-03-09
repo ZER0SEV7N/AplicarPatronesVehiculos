@@ -24,7 +24,7 @@ export default class VehiculosRepos extends BaseRepos {
         //Llamar al procedimiento almacenado para actualizar el vehiculo
         const query = `CALL SP_Actualizar_Vehiculo(?,?,?,?,?,?,?)`
         return this.model.sequelize.query(query, {
-            replacements: [id, data.modelo, data.color, data.matricula, data.anio_fabricacion, data.idmarca, data.estado]
+            replacements: [id, data.idtv, data.modelo, data.color, data.anio_fabricacion, data.idmarca, data.estado]
         });
     }
 
@@ -49,8 +49,8 @@ export default class VehiculosRepos extends BaseRepos {
 
     //Metodo para obtener el resumen de vehiculos
     async resumenVehiculos() {
-        const [results] = await this.model.sequelize.query(`CALL SP_Resumen_Vehiculos()`);
-        return results;
+        const results = await this.model.sequelize.query(`CALL SP_Resumen_Total()`);
+        return results[0];
     }
 
     //Metodo para cambiar el estado de un vehiculo

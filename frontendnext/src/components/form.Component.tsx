@@ -32,7 +32,7 @@ const FormComponent = ({ formData, marcas, tiposVehiculo, isEditMode, onSubmit, 
                             className="form-control"
                             value={formData.idtv}
                             onChange={onChange}
-                            required disabled={isEditMode} 
+                            required
                         >
                             <option value="">Seleccionar tipo</option>
                             {tiposVehiculo.map((tipo) => (
@@ -78,7 +78,7 @@ const FormComponent = ({ formData, marcas, tiposVehiculo, isEditMode, onSubmit, 
                             className="form-control"
                             value={formData.matricula}
                             onChange={onChange}
-                            required
+                            required disabled={isEditMode} 
                             minLength={7}
                             maxLength={7}
                         />

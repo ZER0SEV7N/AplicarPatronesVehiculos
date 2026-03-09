@@ -14,6 +14,12 @@ import { Bar, BarChart, CartesianGrid, Cell, Legend, Pie, PieChart, ResponsiveCo
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#8884d8",  "#a4de6c", "#8dd1e1", "#ff0000", "#ed57db", "#e9602e"];
 
 export default function Home() {
+  //Calcular el porcentaje de cada estado para mostrar en la descripción de las tarjetas
+  const calcularPorcentaje = (valor:number) => {
+    if(totalVehiculos ===0 ) return "0%";
+    return `${((valor / totalVehiculos) * 100).toFixed(1)}% del inventario`;
+  }
+  
   //Obtener los datos del dashboard usando el hook personalizado
   const { totalVehiculos, 
     vehiculosActivos, 
@@ -23,16 +29,14 @@ export default function Home() {
     marcasMasPopulares, 
     tiposMasPopulares,
     ultimoCreado,
-    ultimoActualizado } = useDashboardData();
-  
+    ultimoActualizado } = useDashboardData(); 
   return (  
     <div className="p-8 space-y-8 mt-10">
-      
       <div>
         <h1 className="text-3xl font-bold tracking-tight">Dashboard General</h1>
       </div>
 
-      {/* Tarjetas Dinámicas */}
+      {/* Tarjetas de resumen */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
         <StatsCard 
           titulo="Total de Vehiculos" 
@@ -40,37 +44,39 @@ export default function Home() {
           valor={totalVehiculos || 0} 
           icono={Car} 
           color="text-blue-500"
-          claseBorde="border-l-green-500"
+          claseBorde="shadow-blue-500/20 hover:shadow-blue-500/40"
         />
         <StatsCard 
           titulo="Vehiculos Activos" 
-          descripcion="Listos para uso" 
+          descripcion={calcularPorcentaje(vehiculosActivos)} 
           valor={vehiculosActivos || 0} 
           icono={CheckCircle} 
           color="text-green-500"
-          claseBorde="border-l-blue-500"
+          claseBorde="shadow-green-500/20 hover:shadow-green-500/40"
         />
         <StatsCard 
           titulo="Inactivos" 
-          descripcion="Fuera de servicio" 
+          descripcion={calcularPorcentaje(vehiculosInactivos)} 
           valor={vehiculosInactivos || 0} 
           icono={XCircle} 
           color="text-red-500"
-          claseBorde="border-l-blue-500"
+          claseBorde="shadow-red-500/20 hover:shadow-red-500/40"
         />
         <StatsCard 
           titulo="En Mantenimiento" 
-          descripcion="En reparación" 
+          descripcion={calcularPorcentaje(vehiculosReparacion)} 
           valor={vehiculosReparacion || 0} 
           icono={Hammer} 
           color="text-yellow-500"
+          claseBorde="shadow-yellow-500/20 hover:shadow-yellow-500/40"
         />
         <StatsCard 
           titulo="Vendidos" 
-          descripcion="Ventas históricas" 
+          descripcion={calcularPorcentaje(vehiculosVendidos)} 
           valor={vehiculosVendidos || 0} 
           icono={Receipt} 
           color="text-purple-500"
+          claseBorde="shadow-purple-500/20 hover:shadow-purple-500/40"
         />
       </div>
 
@@ -89,18 +95,19 @@ export default function Home() {
             {ultimoCreado ? (
               <div>
                 <p className="font-semibold text-lg text-foreground">{ultimoCreado.marca} {ultimoCreado.modelo}</p>
-                <p className="text-xs mt-1">Registrado el: {new Date(ultimoCreado.created_at).toLocaleDateString()}</p>
+                <p className="text-xs mt-1">Registrado el: {new Date(ultimoCreado.created_at).toLocaleString('es-PE')}</p>
                 <p className="text-sm text-muted-foreground mt-2">
                   Matrícula: <span className="font-medium text-foreground">{ultimoCreado.matricula}</span> - Tipo: {ultimoCreado.tipo_vehiculo}
                 </p>
+                <p className="text-xs mt-1">Estado: <span className="font-medium text-foreground">{ultimoCreado.estado}</span></p>
               </div>
             ) : (
               <p className="text-muted-foreground">No hay vehículos creados recientemente.</p>
             )}
           </CardContent>
         </Card>
-        {/* Último Vehículo Actualizado */}
 
+        {/* Último Vehículo Actualizado */}
         <Card className="shadow-sm border-l-4 border-l-blue-500">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground flex">
@@ -112,10 +119,11 @@ export default function Home() {
             {ultimoActualizado ? (
               <div>
                 <p className="font-semibold text-lg text-foreground">{ultimoActualizado.marca} {ultimoActualizado.modelo}</p>
-                <p className="text-xs mt-1">Actualizado el: {new Date(ultimoActualizado.updated_at).toLocaleDateString()}</p>
+                <p className="text-xs mt-1">Actualizado el: {new Date(ultimoActualizado.updated_at).toLocaleString('es-PE')}</p>
                 <p className="text-sm text-muted-foreground mt-2">
                   Matrícula: <span className="font-medium text-foreground">{ultimoActualizado.matricula}</span> - Tipo: {ultimoActualizado.tipo_vehiculo}
                 </p>
+                <p className="text-xs mt-1">Estado: <span className="font-medium text-foreground">{ultimoActualizado.estado}</span></p>
               </div>
             ) : (
               <p className="text-muted-foreground">No hay vehículos actualizados recientemente.</p>
@@ -150,7 +158,7 @@ export default function Home() {
                  axisLine={false} 
                  interval={0}
                  angle={45}
-                  textAnchor="start"
+                 textAnchor="start"
                  height={80}
                 />
                 <YAxis 
@@ -209,7 +217,6 @@ export default function Home() {
             </ResponsiveContainer>
           </CardContent>
         </Card>
-
       </div>
     </div>
   );

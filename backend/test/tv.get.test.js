@@ -7,7 +7,7 @@ describe("Pruebas unitarias para los endpoints GET de tipos de vehiculos", () =>
     //Prueba para obtener todos los tipos de vehiculos
     //GET /api/tipovehiculos
     describe("GET /api/tipos-vehiculos", () => {
-        it("Deberia devolver un json de tipos de vehiculos", async () => {
+        it("Deberia devolver un json y el codigo 200 de tipos de vehiculos", async () => {
             //Prueba con el endpoint correcto
             const res = await request(app).get("/api/tipos-vehiculos")
             expect(res.statusCode).toEqual(200);
@@ -23,7 +23,7 @@ describe("Pruebas unitarias para los endpoints GET de tipos de vehiculos", () =>
     //GET /api/tipos-vehiculos/:id
     //Prueba con un id valido
     describe("GET /api/tipos-vehiculos/:id", () => {
-        it("Deberia devolver un json del tipo de vehiculo con el id especificado", async () => {
+        it("Deberia devolver un json y el codigo 200 del tipo de vehiculo con el id especificado", async () => {
             const res = await request(app).get("/api/tipos-vehiculos/3");
             expect(res.statusCode).toEqual(200);
             expect(res.body).toHaveProperty("idtipovehiculo");
@@ -32,6 +32,6 @@ describe("Pruebas unitarias para los endpoints GET de tipos de vehiculos", () =>
     });
     test("Deberia devolver un error 404 si el id no existe", async () => {
         const res = await request(app).get("/api/tipos-vehiculos/999");
-        expect(res.statusCode).toEqual(400);
+        expect(res.statusCode).toEqual(404);
     });
 });

@@ -57,10 +57,7 @@ export default class VehiculosController extends BaseController{
             const { id }  = req.params;
             const { estado } = req.body;
             const vehiculo = await this.vehiculosService.cambiarEstado(id, estado);
-            res.status(200).json({
-                message: 'Estado del vehiculo actualizado correctamente',
-                data: vehiculo
-            });
+            res.status(200).json({vehiculo});
         }catch (error) {
             res.status(400).json({ error: error.message });
         }
@@ -69,7 +66,7 @@ export default class VehiculosController extends BaseController{
     //Metodo para obtener el resumen de vehiculos para el dashboard
     resumenVehiculos = async (req, res) => {
         try {
-            const resumen = await this.vehiculosService.getResumenCompleto();
+            const resumen = await this.vehiculosService.getResumenVehiculo();
             res.status(200).json(resumen);
         }catch (error) {
             res.status(400).json({ error: error.message });

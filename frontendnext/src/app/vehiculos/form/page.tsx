@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { Vehiculo } from "@/src/types";
 
 export default function formPage(){
+    //Obtener el ID
     const searchParams = useSearchParams();
     const id = searchParams.get("id")
 

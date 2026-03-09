@@ -3,7 +3,6 @@
 import React from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { LucideIcon } from "lucide-react";
-import { cn } from "@/lib/utils";
 
 //Definir interface
 interface StatsCardProps {
@@ -17,7 +16,7 @@ interface StatsCardProps {
 
 const StatsCard = ({ titulo, descripcion, valor, icono: Icono, color = "text-muted-foreground", claseBorde }: StatsCardProps) => {
     return (
-        <Card className={cn("shadow-sm border-y border-r border-l-4 bg-card hover:shadow-md transition-shadow", claseBorde)}>
+        <Card className={`border bg-card transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-1 ${claseBorde}`}>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium text-muted-foreground">
                     {titulo}

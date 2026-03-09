@@ -7,7 +7,7 @@ describe("Pruebas unitarias para los endpoints GET de marcas de vehiculos", () =
     //Prueba para obtener todas las marcas de vehiculos
     //GET /api/marcas
     describe("GET /api/marcas", () => {
-        it("Deberia devolver un json de marcas de vehiculos", async () => {
+        it("Deberia devolver un json y el codigo 200 de marcas de vehiculos", async () => {
             //Prueba con el endpoint correcto
             const res = await request(app).get("/api/marcas")
             expect(res.statusCode).toEqual(200);
@@ -23,7 +23,7 @@ describe("Pruebas unitarias para los endpoints GET de marcas de vehiculos", () =
     //GET /api/marcas/:id
     //Prueba con un id valido
     describe("GET /api/marcas/:id", () => {
-        it("Deberia devolver un json de la marca con el id especificado", async () => {
+        it("Deberia devolver un json y el codigo 200 de la marca con el id especificado", async () => {
             const res = await request(app).get("/api/marcas/3");
             expect(res.statusCode).toEqual(200);
             expect(res.body).toHaveProperty("idmarca");
@@ -32,6 +32,6 @@ describe("Pruebas unitarias para los endpoints GET de marcas de vehiculos", () =
     });
     test("Deberia devolver un error 404 si el id no existe", async () => {
         const res = await request(app).get("/api/marcas/999");
-        expect(res.statusCode).toEqual(400);
+        expect(res.statusCode).toEqual(404);
     });
 });

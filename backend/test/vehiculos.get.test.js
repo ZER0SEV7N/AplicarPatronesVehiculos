@@ -8,7 +8,7 @@ describe("Pruebas unitarias para los endpoints GET de vehiculos", () => {
     //Prueba para obtener todos los vehiculos 
     //GET /api/vehiculos
     describe("GET /api/vehiculos", () => {
-        it("Deberia devolver un json de vehiculos", async () => {
+        it("Deberia devolver un json y el codigo 200 de vehiculos", async () => {
             //Prueba con el endpoint correcto
             const res = await request(app).get("/api/vehiculos");
             expect(res.statusCode).toEqual(200);
@@ -33,7 +33,7 @@ describe("Pruebas unitarias para los endpoints GET de vehiculos", () => {
     //Prueba para obtener un vehiculo al pasar su id
     //GET /api/vehiculos/:id
     describe("GET /api/vehiculos/:id", () => {
-        it("Deberia devolver un json con la informacion de un vehiculo en especifico", async () => {
+        it("Deberia devolver un json y el codigo 200 con la informacion de un vehiculo en especifico", async () => {
             //Prueba con un id valido
             const res = await request(app).get("/api/vehiculos/1");
             expect(res.statusCode).toEqual(200);
@@ -62,7 +62,7 @@ describe("Pruebas unitarias para los endpoints GET de vehiculos", () => {
     marca: idmarca Integer
     */
     describe("GET /api/vehiculos?modelo=&color=&matricula=&anio_fabricacion=&idtipovehiculo=&idmarca=", () => {
-        it("Deberia devolver un json con los vehiculos que coincidan con el criterio de busqueda", async () => {
+        it("Deberia devolver un json y el codigo 200con los vehiculos que coincidan con el criterio de busqueda", async () => {
             //Prueba con un criterio de búsqueda válido
             const res = await request(app).get("/api/vehiculos?modelo=Ranger");
             expect(res.statusCode).toEqual(200);

@@ -10,9 +10,9 @@ describe("Pruebas unitarias para los endpoints PATCH de vehiculos", () => {
     //REQUIERE:
     /*{
     idvehiculo: "",
+    idtv: "",
     modelo: "",
     color: "",
-    matricula: "";
     anio_fabricacion: "",
     idmarca: ""
     }
@@ -22,10 +22,11 @@ describe("Pruebas unitarias para los endpoints PATCH de vehiculos", () => {
             //Prueba con datos validos
             const id = 1;
             const vehiculoBien = {
+                "idtv": 6,
                 "modelo": "Ranger XLT",
                 "color": "Rojo oscuro",
-                "matricula": "SE0-PQ3",
                 "anio_fabricacion": 2021,
+                "estado": "Inactivo",
                 "idmarca": 5
             }
             const res = await request(app).patch(`/api/vehiculos/${id}`).send(vehiculoBien);
@@ -41,10 +42,11 @@ describe("Pruebas unitarias para los endpoints PATCH de vehiculos", () => {
             //Prueba con un año de fabricación mayor al año actual y una matricula con más de 7 caracteres
             const id = 1;
             const vehiculoMal = {
+                "idtv": 90,
                 "modelo": "Ranger XLT",
                 "color": "Rojo oscuro",
-                "matricula": "SE0-PQ2-123",
                 "anio_fabricacion": 2090,
+                "estado": "Disponible",
                 "idmarca": 5
             }
             const res = await request(app).patch(`/api/vehiculos/${id}`).send(vehiculoMal);

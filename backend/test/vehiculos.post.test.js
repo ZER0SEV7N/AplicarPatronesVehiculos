@@ -17,14 +17,15 @@ describe("Pruebas unitarias para los endpoints POST de vehiculos", () => {
     "idmarca": 
     }*/
    describe("POST /api/vehiculos", () => {
-        it("Deberia crear un nuevo vehiculo", async () => {
+        it("Deberia crear un nuevo vehiculo y devolver el codigo 201", async () => {
             //Prueba con datos validos
             const vehiculoBien = {
                 "idtv": 1,
                 "modelo": "Ranger",
                 "color": "Negro",
-                "matricula": "ABC-123",
+                "matricula": "ABC-940",
                 "anio_fabricacion": 2020,
+                "estado": "Disponible",
                 "idmarca": 1
             }
             const res = await request(app).post("/api/vehiculos").send(vehiculoBien)
@@ -38,6 +39,7 @@ describe("Pruebas unitarias para los endpoints POST de vehiculos", () => {
                 "color": "Gris",
                 "matricula": "345-678",
                 "anio_fabricacion": 2020,
+                "estado": "Disponible",
                 "idmarca": 100
             }
             const res = await request(app).post("/api/vehiculos").send(vehiculoMal);
@@ -52,6 +54,7 @@ describe("Pruebas unitarias para los endpoints POST de vehiculos", () => {
                 "color": "Gris",
                 "matricula": "ABC-43278",
                 "anio_fabricacion": 1899,
+                "estado": "Disponible",
                 "idmarca": 1
             }
             const res = await request(app).post("/api/vehiculos").send(vehiculoMal);
@@ -64,6 +67,7 @@ describe("Pruebas unitarias para los endpoints POST de vehiculos", () => {
                 "modelo": "Turbo GT",
                 "color": "Gris",
                 "anio_fabricacion": 2020,
+                "estado": "dadadassdadsa",
                 "idmarca": 1
             }
             const res = await request(app).post("/api/vehiculos").send(vehiculoMal);

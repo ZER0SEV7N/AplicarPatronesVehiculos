@@ -16,7 +16,8 @@ const FormComponent = ({ vehiculo }: FormComponentProps) => {
   const router = useRouter(); //Para redireccion
   const [marcas, setMarcas] = useState<Marca[]>([]);
   const [tiposVehiculo, setTiposVehiculo] = useState<TipoVehiculo[]>([]);
-  
+  const [matriculaExistente, setMatriculaExistente] = useState<Vehiculo[]>([]);
+
   //Cargar marcas y tipos de vehiculo al montar el componente
   const [formData, setFormData] = useState({
     idtv: "",
@@ -31,12 +32,14 @@ const FormComponent = ({ vehiculo }: FormComponentProps) => {
   //Cargar datos del vehiculo a editar (si es necesario)
   useEffect(() => {
     const cargarSelects = async () => {
-      const [marcasRes, tiposRes] = await Promise.all([
+      const [marcasRes, tiposRes, vehiculosRes] = await Promise.all([
         api.get("/marcas"),
-        api.get("/tipos-vehiculos")
+        api.get("/tipos-vehiculos"),
+        api.get("/vehiculos")
       ]);
       setMarcas(marcasRes.data);
       setTiposVehiculo(tiposRes.data);
+      setMatriculaExistente(vehiculosRes.data);
     };
     cargarSelects();
   }, []);
@@ -66,10 +69,23 @@ const FormComponent = ({ vehiculo }: FormComponentProps) => {
   };
 
   //Manejar el envio del formulario
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    //Construir un payload con los datos
+    //Validar que la matricula no se repita
+    const matriculaIngresada = formData.matricula.trim().toLowerCase();
+
+    const existeMatricula = matriculaExistente.some((v) =>
+      v.matricula.trim().toLowerCase() === matriculaIngresada &&
+      (!vehiculo || v.idvehiculo !== vehiculo.idvehiculo) 
+    );
+
+    if(existeMatricula){
+      alert("La matrícula ya existe. Por favor, ingresa una matrícula diferente.");
+      return;
+    }
+
+    //Modificar el tipado de los datos en el payload
     const payload = {
       ...formData,
       idtv: parseInt(formData.idtv),

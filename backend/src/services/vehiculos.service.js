@@ -39,7 +39,7 @@ export default class VehiculosServices {
     }
 
     async validarEstado(estado) {
-        const estadosValidos = ['Disponible', 'En Reparacion', 'Inactivo', 'Vendido', 'No Disponible'];
+        const estadosValidos = ['Disponible', 'En Reparacion', 'Inactivo', 'Vendido'];
         if (!estado) throw new Error('El estado es obligatorio');
         if (!estadosValidos.includes(estado)) throw new Error(`El estado debe ser uno de los siguientes: ${estadosValidos.join(', ')}`);
     }
@@ -62,7 +62,6 @@ export default class VehiculosServices {
         await this.validarVehiculo(id);
         //Validaciones previas
         await this.validarMarca(data.idmarca);
-        await this.validarMatricula(data.matricula);
         await this.validarAnioFabricacion(data.anio_fabricacion);
         await this.validarEstado(data.estado);
 
@@ -90,7 +89,7 @@ export default class VehiculosServices {
     }
 
     //Metodo para obtener el resumen de vehiculos para el dashboard
-    async getResumenCompleto() {
+    async getResumenVehiculo() {
         return this.vehiculosRepos.resumenVehiculos();
     }
 
