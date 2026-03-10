@@ -8,7 +8,7 @@ CREATE PROCEDURE SP_Insertar_Vehiculo(
     IN p_matricula CHAR(7),
     IN p_anio_fabricacion YEAR,
     IN p_idmarca INT,
-    IN p_estado ENUM('Disponible', 'En Reparacion', 'Vendido', 'No Disponible', 'Inactivo')
+    IN p_estado ENUM('Disponible', 'En Reparacion', 'Vendido', 'Inactivo')
 )
 BEGIN
     INSERT vehiculos (idtipovehiculo, modelo, color, matricula, anio_fabricacion, idmarca, estado)
@@ -173,7 +173,6 @@ BEGIN
         SUM(CASE WHEN estado = 'En Reparacion' THEN 1 ELSE 0 END) AS Reparacion,
         SUM(CASE WHEN estado = 'Inactivo' THEN 1 ELSE 0 END) AS Inactivos,
         SUM(CASE WHEN estado = 'Vendido' THEN 1 ELSE 0 END) AS Vendidos,
-        SUM(CASE WHEN estado = 'No Disponible' THEN 1 ELSE 0 END) AS No_Disponibles
     FROM vehiculos;
 END //
 DELIMITER ;
