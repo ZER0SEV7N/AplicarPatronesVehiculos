@@ -21,7 +21,6 @@ npm test -- ${nombre.peticion}
 npm test
 ```
 
-
 Primer Patron: Singleton
 > Se utiliza en database.js para unicamente tener una instancia de base de datos iniciada, utilizo la libreria sequelize para aplicar este patron.
 

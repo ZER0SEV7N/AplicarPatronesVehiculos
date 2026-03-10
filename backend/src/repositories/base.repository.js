@@ -1,7 +1,6 @@
 //backend/src/repositories/base.repository.js
 //Clase base para usar en los repositorios
 //Unicamente metodos comunes a todos los repositorios
-
 export default class BaseRepos {
     constructor(model) {
         this.model = model;

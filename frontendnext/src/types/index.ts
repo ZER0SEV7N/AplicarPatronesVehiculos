@@ -19,7 +19,7 @@ export interface Vehiculo {
     matricula: string;
     anio_fabricacion: number;
     idmarca: number;
-    estado?: 'Disponible' | 'en Reparacion' | 'Inactivo';
+    estado?: 'Disponible' | 'En Reparacion' | 'Vendido' | 'Inactivo';
     
     tipo_vehiculo?: string;
     marca?: string;

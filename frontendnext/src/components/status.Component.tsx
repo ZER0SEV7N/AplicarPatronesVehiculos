@@ -23,6 +23,7 @@ const ModalStatus = ({ vehiculo, onStatusChange, onClose, onConfirm }: ModalStat
                         <h5 className='modal-title'>Cambiar Estado del Vehiculo</h5>
                         <button type='button' className='btn-close' onClick={onClose}></button>
                     </div>
+                    {/* Select para elegir el nuevo estado */}
                     <div className='modal-body'>
                         <label className='form-label'>Selecciona un estado</label>
                         <select className='form-select' value={nuevoEstado} onChange={(e) => setNuevoEstado(e.target.value)}>

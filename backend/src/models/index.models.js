@@ -109,9 +109,9 @@ const vehiculosModel = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    //Estado ENUM('disponible', 'vendido', 'En Reparacion', 'No Disponible', 'Inactivo')
+    //Estado ENUM('disponible', 'vendido', 'En Reparacion', 'Inactivo')
     estado: {
-      type: DataTypes.ENUM('Disponible', 'En Reparacion', 'Vendido', 'No Disponible', 'Inactivo'),
+      type: DataTypes.ENUM('Disponible', 'En Reparacion', 'Vendido', 'Inactivo'),
       allowNull: false,
       defaultValue: 'Disponible',
     },

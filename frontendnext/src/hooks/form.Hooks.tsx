@@ -104,7 +104,7 @@ const FormComponent = ({ vehiculo }: FormComponentProps) => {
         alert("Vehiculo creado exitosamente");
       }
       router.push("/vehiculos"); //Redireccionar al listado
-      router.refresh(); //Refrescar la pagina para mostrar el nuevo vehiculo
+      router.refresh(); 
     } catch (error) {
       console.error("Error al guardar el vehiculo:", error);
       alert("Ocurrió un error al guardar el vehiculo. Por favor, intenta nuevamente.");

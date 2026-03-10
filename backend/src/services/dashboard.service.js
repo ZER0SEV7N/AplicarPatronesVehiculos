@@ -23,7 +23,6 @@ export default class DashboardService {
                 this.vehiculosRepos.ultimoActualizado(),
                 this.TVRepos.resumenTiposVehiculos(),
                 this.marcasRepos.resumenMarcas()
-                //this.vehiculosRepos.countAll() //Metodo para contar el total de vehiculos
             ])
             //Retornar un Json con toda la informacion del dashboard
             return {

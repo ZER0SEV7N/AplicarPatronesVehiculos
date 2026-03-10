@@ -36,8 +36,7 @@ const TableComponent = ({ data, onEdit, onDelete, onChangeStatus }: tableCompone
                             </td>
                         </tr>
                     ) : (
-                        data.map((item) => (
-                            
+                        data.map((item) => (           
                             <tr key={item.idvehiculo}>
                                 <td>{item.idvehiculo}</td>
                                 <td>{item.tipo_vehiculo ||  "No establecido"}</td>
