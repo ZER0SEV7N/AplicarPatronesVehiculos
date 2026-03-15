@@ -1,7 +1,7 @@
 //Frontendnext/src/components/statsCard.Component.tsx
 //Componente para mostrar estadisticas en el dashboard, reutilizable para diferentes tipos de datos
 import React from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { LucideIcon } from "lucide-react";
 
 //Definir interface

@@ -11,7 +11,6 @@ export interface TipoVehiculo {
 }
 
 export interface Vehiculo {
-    [x: string]: any;
     idvehiculo?: number;
     idtv: number;
     modelo: string;

@@ -1,6 +1,5 @@
 //backend/src/services/vehiculos.services.js
 //Clase para manejar la logica de negocio de los vehiculos. Previo al controlador
-
 export default class VehiculosServices {
     constructor(vehiculosRepos, tipoVehiculosRepos, marcasRepos) {
         this.vehiculosRepos = vehiculosRepos;

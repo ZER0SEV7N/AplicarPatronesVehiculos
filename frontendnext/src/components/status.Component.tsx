@@ -30,7 +30,6 @@ const ModalStatus = ({ vehiculo, onStatusChange, onClose, onConfirm }: ModalStat
                             <option value="Disponible">Disponible</option>
                             <option value="En Reparacion">En Reparacion</option>
                             <option value="Vendido">Vendido</option>
-                            <option value="No Disponible">No Disponible</option>
                             <option value="Inactivo">Inactivo</option>
                         </select>
                     </div>
